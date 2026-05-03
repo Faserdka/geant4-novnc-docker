@@ -1,0 +1,15 @@
+services:
+  geant4:
+    build: .
+    container_name: geant4_desktop
+    ports:
+      - "8080:8080"
+    environment:
+      # Пароль для доступа через noVNC (можно изменить)
+      - VNC_PASSWORD=${VNC_PASSWORD:-geant4pass}
+    volumes:
+      # Монтирование локальной папки workspace внутрь контейнера
+      - ./workspace:/workspace
+    # Выделение общей памяти для корректной работы Qt/OpenGL (предотвращает артефакты)
+    shm_size: '2gb'
+    restart: unless-stopped
