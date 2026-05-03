@@ -231,11 +231,51 @@ html, body {
   stroke-width: 1.5;
 }
 
-/* Hide default labels/cancel */
-#noVNC_credentials_dlg label,
-#noVNC_credentials_dlg ul,
+/* Hide default labels/cancel but keep input visible */
+#noVNC_credentials_dlg > label,
 #noVNC_cancel_credentials_button {
   display: none !important;
+}
+#noVNC_credentials_dlg ul {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#noVNC_credentials_dlg ul li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#noVNC_credentials_dlg ul li label {
+  display: none !important;
+}
+#noVNC_credentials_dlg ul li input {
+  background: rgba(255,255,255,0.7) !important;
+  border: 1px solid rgba(180,170,160,0.25) !important;
+  border-radius: 12px !important;
+  color: #3d3a36 !important;
+  font-size: 14px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 16px 16px 16px 48px !important;
+  width: 100% !important;
+  outline: none !important;
+  margin-bottom: 18px !important;
+  transition: all 0.3s ease !important;
+}
+#noVNC_credentials_dlg ul li input:focus {
+  border-color: rgba(160,140,120,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(180,170,160,0.1) !important;
+}
+
+/* Center credentials dialog content */
+#noVNC_credentials_dlg {
+  text-align: center !important;
+}
+#noVNC_credentials_dlg .noVNC_logo {
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  background: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
 }
 
 /* Transition overlay */
@@ -362,7 +402,7 @@ html, body {
       if (dlg && !dlg.querySelector(".g4-encrypted")) {
         var badge = document.createElement("div");
         badge.className = "g4-encrypted";
-        badge.innerHTML = LOCK_SVG + " QUANTUM ENCRYPTED NODE";
+        badge.innerHTML = LOCK_SVG + " QUANTUM PHYSICS";
         dlg.appendChild(badge);
       }
     });
