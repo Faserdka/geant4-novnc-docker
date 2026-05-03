@@ -6,7 +6,7 @@ export HOME=/root
 
 # Настройка пароля VNC
 mkdir -p $HOME/.vnc
-echo "${VNC_PASSWORD:-geant4pass}" | vncpasswd -f > $HOME/.vnc/passwd
+echo "${VNC_PASSWORD:-}" | vncpasswd -f > $HOME/.vnc/passwd
 chmod 600 $HOME/.vnc/passwd
 
 # Создание скрипта xstartup для Fluxbox
@@ -26,6 +26,6 @@ rm -rf /tmp/.X1-lock /tmp/.X11-unix/X1 /tmp/.X11-unix
 vncserver :1 -geometry 1280x768 -depth 24
 
 # Запуск noVNC
-echo "Starting noVNC web server on port 8080..."
+echo "Starting noVNC web server on port ..."
 # Используем websockify для проксирования VNC в WebSockets
-exec websockify --web /usr/share/novnc 8080 localhost:5901
+exec websockify --web /usr/share/novnc "PORT@ localhost:"PORT"
