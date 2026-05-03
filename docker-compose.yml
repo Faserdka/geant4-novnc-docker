@@ -3,7 +3,7 @@ services:
     build: .
     container_name: geant4_desktop
     ports:
-   -"IN_PORT":"OUT_PORT"
+   -"80":"80"
     environment:
       # Пароль для доступа через noVNC (можно изменить)
       - VNC_PASSWORD=${VNC_PASSWORD:-"PASSWORD"}
