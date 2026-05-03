@@ -1,0 +1,97 @@
+<!-- Custom Geant4 UI modifications -->
+<style>
+  /* Modern Dark Glassmorphism background */
+  #noVNC_transition {
+      background: linear-gradient(135deg, #090b10 0%, #151a28 50%, #1d2b45 100%) !important;
+  }
+  
+  /* The main logo text */
+  .noVNC_logo {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+      font-size: 55px !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      text-shadow: 0 0 15px rgba(0, 198, 255, 0.5), 0 0 30px rgba(0, 114, 255, 0.4) !important;
+      line-height: 1.1 !important;
+      margin-bottom: 20px !important;
+      text-align: center !important;
+  }
+  
+  /* Subtitle for the 11th department */
+  .g4-subtitle {
+      font-size: 16px;
+      color: #a0aec0;
+      font-weight: 400;
+      display: block;
+      margin-top: 12px;
+      text-shadow: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+  }
+
+  /* The connection dialog box (Glassmorphism) */
+  #noVNC_connect_dlg, #noVNC_password_dlg {
+      background: rgba(20, 25, 40, 0.6) !important;
+      backdrop-filter: blur(15px) !important;
+      -webkit-backdrop-filter: blur(15px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 20px !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+      padding: 30px !important;
+  }
+
+  /* The Connect and Send Password buttons */
+  #noVNC_connect_button, #noVNC_password_button {
+      background: linear-gradient(to right, #00c6ff, #0072ff) !important;
+      border: none !important;
+      border-radius: 12px !important;
+      color: white !important;
+      font-weight: 700 !important;
+      font-size: 15px !important;
+      letter-spacing: 1px !important;
+      padding: 12px 24px !important;
+      box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3) !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+  }
+
+  #noVNC_connect_button:hover, #noVNC_password_button:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 25px rgba(0, 114, 255, 0.5) !important;
+  }
+
+  /* Password input field */
+  #noVNC_password_input {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 10px !important;
+      color: white !important;
+      padding: 12px 15px !important;
+      font-size: 14px !important;
+      transition: all 0.3s ease !important;
+  }
+
+  #noVNC_password_input:focus {
+      outline: none !important;
+      border-color: #00c6ff !important;
+      box-shadow: 0 0 10px rgba(0, 198, 255, 0.3) !important;
+  }
+</style>
+
+<script>
+  // Dynamically override noVNC UI building logic
+  document.addEventListener("DOMContentLoaded", () => {
+    setInterval(() => {
+      // Override document title
+      if (document.title !== "Geant4") document.title = "Geant4";
+      
+      // Override logo text and add subtitle
+      const logos = document.querySelectorAll(".noVNC_logo");
+      logos.forEach(logo => {
+        if (!logo.innerHTML.includes("для 11 кафедры")) {
+          logo.innerHTML = "Geant4<br><span class='g4-subtitle'>для 11 кафедры</span>";
+        }
+      });
+    }, 100); 
+  });
+</script>

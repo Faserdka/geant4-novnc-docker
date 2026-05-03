@@ -48,6 +48,10 @@ RUN cp -r /opt/geant4/geant4-11.3.0/examples/basic/B1/* . && \
 # Добавляем настройку окружения Geant4 в bashrc, чтобы он был доступен сразу при открытии терминала
 RUN echo "source /usr/local/geant4/bin/geant4.sh" >> /root/.bashrc
 
+# Интеграция кастомного современного дизайна для интерфейса noVNC
+COPY custom_ui.html /tmp/custom_ui.html
+RUN cat /tmp/custom_ui.html >> /usr/share/novnc/vnc.html
+
 # Подготовка скрипта запуска
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
