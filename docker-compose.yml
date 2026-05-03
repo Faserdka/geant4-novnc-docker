@@ -3,10 +3,10 @@ services:
     build: .
     container_name: geant4_desktop
     ports:
-   
+   -"IN_PORT":"OUT_PORT"
     environment:
       # Пароль для доступа через noVNC (можно изменить)
-      - VNC_PASSWORD=${VNC_PASSWORD:-}
+      - VNC_PASSWORD=${VNC_PASSWORD:-"PASSWORD"}
     volumes:
       # Монтирование локальной папки workspace внутрь контейнера
       - ./workspace:/workspace
