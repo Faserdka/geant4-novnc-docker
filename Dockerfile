@@ -50,6 +50,7 @@ RUN echo "source /usr/local/geant4/bin/geant4.sh" >> /root/.bashrc
 
 # Полная замена стилей и внедрение кастомного Geant4 UI
 COPY custom_ui.html /tmp/custom_ui_js.html
+COPY easter_egg.png /usr/share/novnc/app/images/easter_egg.png
 RUN cat /tmp/custom_ui_js.html >> /usr/share/novnc/vnc.html
 
 # Подготовка скрипта запуска
