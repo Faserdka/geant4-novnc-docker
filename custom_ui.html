@@ -164,7 +164,7 @@ html, body {
 
 /* Buttons */
 #noVNC_connect_button,
-#noVNC_send_credentials_button {
+#noVNC_credentials_button {
   background: rgba(255,255,255,0.85) !important;
   background-image: none !important;
   border: 1px solid rgba(180,170,160,0.2) !important;
@@ -202,7 +202,7 @@ html, body {
   border-bottom-width: 0 !important;
 }
 #noVNC_connect_button:hover,
-#noVNC_send_credentials_button:hover {
+#noVNC_credentials_button:hover {
   background: rgba(255,255,255,1) !important;
   box-shadow: 0 4px 20px rgba(150,130,110,0.12) !important;
   transform: translateY(-1px) !important;
@@ -285,6 +285,11 @@ html, body {
 }
 #noVNC_transition_text { color: #5a554e !important; }
 
+/* Hide username block in credentials */
+#noVNC_username_block {
+  display: none !important;
+}
+
 /* Control bar sidebar */
 #noVNC_control_bar {
   background: rgba(255,255,255,0.5) !important;
@@ -296,7 +301,7 @@ html, body {
 }
 
 /* Panels */
-.noVNC_panel {
+.noVNC_panel:not(#noVNC_credentials_dlg) {
   background: rgba(255,255,255,0.9) !important;
   backdrop-filter: blur(10px) !important;
   border-radius: 14px !important;
@@ -391,12 +396,22 @@ html, body {
     }
 
     // 6. Send credentials button
-    var sendBtn = document.getElementById("noVNC_send_credentials_button");
-    if (sendBtn && sendBtn.textContent.indexOf("AUTHENTICATE") === -1) {
-      sendBtn.textContent = "AUTHENTICATE \u2192";
+    var sendBtn = document.getElementById("noVNC_credentials_button");
+    if (sendBtn && sendBtn.value.indexOf("AUTHENTICATE") === -1) {
+      sendBtn.value = "AUTHENTICATE \u2192";
     }
 
-    // 7. Encrypted badge
+    // 7. Inject Logo into Credentials Dialog
+    var credDlg = document.getElementById("noVNC_credentials_dlg");
+    if (credDlg && !credDlg.querySelector(".noVNC_logo")) {
+      var logoHtml = '<div class="g4-icon">' + FLASK_SVG + '</div>' +
+                     '<div class="noVNC_logo">Geant4</div>' +
+                     '<div class="g4-subtitle">\u0434\u043b\u044f 11 \u043a\u0430\u0444\u0435\u0434\u0440\u044b</div>';
+      var form = credDlg.querySelector("form") || credDlg;
+      form.insertAdjacentHTML('afterbegin', logoHtml);
+    }
+
+    // 8. Encrypted badge
     ["noVNC_connect_dlg", "noVNC_credentials_dlg"].forEach(function(id) {
       var dlg = document.getElementById(id);
       if (dlg && !dlg.querySelector(".g4-encrypted")) {
