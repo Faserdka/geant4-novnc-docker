@@ -49,7 +49,6 @@ RUN cp -r /opt/geant4/geant4-11.3.0/examples/basic/B1/* . && \
 RUN echo "source /usr/local/geant4/bin/geant4.sh" >> /root/.bashrc
 
 # Полная замена стилей и внедрение кастомного Geant4 UI
-COPY custom_theme.css /usr/share/novnc/app/styles/base.css
 COPY custom_ui.html /tmp/custom_ui_js.html
 RUN cat /tmp/custom_ui_js.html >> /usr/share/novnc/vnc.html
 
