@@ -29,4 +29,4 @@ This repository contains the configuration files to deploy a Geant4 physical eng
    http://localhost:"PORT"
    ```
 
-4. Click **Connect**, enter the default password (`geant4pass`), and enjoy using Geant4!
+4. Click **Connect**, enter the default password (`"PASSWORD"`), and enjoy using Geant4!
