@@ -1,263 +1,124 @@
-<style>
-  /* Base Background */
-  #noVNC_transition {
-      background-color: #121018 !important;
-      background-image: none !important;
-      position: relative;
-      overflow: hidden;
-  }
-
-  /* Shimmering / flowing Geant4 text */
-  @keyframes shimmer {
-      0% { background-position: -200% center; }
-      100% { background-position: 200% center; }
-  }
-
-  .noVNC_logo {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-      font-size: 76px !important;
-      font-weight: 800 !important;
-      text-align: center !important;
-      margin-bottom: 50px !important;
-      line-height: 1.2 !important;
-      /* Flowing color text */
-      background: linear-gradient(
-          to right,
-          #ff3366 10%,
-          #ff759f 30%,
-          #ff3366 50%,
-          #ff1a53 70%,
-          #ff3366 90%
-      ) !important;
-      background-size: 200% auto !important;
-      color: transparent !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      animation: shimmer 5s linear infinite !important;
-      filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.4)) !important;
-  }
-  
-  /* Reset the subtitle so it doesn't take the background clip from the logo */
-  .noVNC_logo .g4-subtitle {
-      font-size: 20px;
-      color: #8c8899 !important;
-      font-weight: 400;
-      display: block;
-      margin-top: 15px;
-      text-transform: none;
-      letter-spacing: 0.5px;
-      -webkit-text-fill-color: #8c8899 !important; 
-      text-shadow: none;
-      filter: none;
-  }
-
-  /* Connection Dialog Box */
-  #noVNC_password_dlg, #noVNC_connect_dlg {
-      background: #1a1721 !important;
-      border: 1px solid rgba(255, 255, 255, 0.05) !important;
-      border-radius: 12px !important;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
-      padding: 40px !important;
-      width: 420px !important;
-      max-width: 90% !important;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
-  }
-
-  /* Hover effect for the dialog box */
-  #noVNC_password_dlg:hover, #noVNC_connect_dlg:hover {
-      transform: scale(1.02) !important;
-      box-shadow: 0 15px 50px rgba(255, 51, 102, 0.15), 0 0 20px rgba(255, 51, 102, 0.1) !important;
-      border-color: rgba(255, 51, 102, 0.3) !important;
-  }
-
-  /* The label inside the box */
-  .custom-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #8c8899;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 25px;
-      display: block;
-      text-align: left;
-  }
-
-  /* Input wrapper */
-  .input-wrapper {
-      position: relative;
-      margin-bottom: 40px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      padding-bottom: 12px;
-  }
-  
-  .input-wrapper::before {
-      content: '🔒';
-      font-size: 16px;
-      margin-right: 15px;
-      opacity: 0.8;
-  }
-
-  /* Password input */
-  #noVNC_password_input, #noVNC_connect_button {
-      margin: 0 !important;
-  }
-  
-  #noVNC_password_input {
-      background: transparent !important;
-      border: none !important;
-      color: #ffffff !important;
-      font-size: 15px !important;
-      padding: 0 !important;
-      width: 100% !important;
-      outline: none !important;
-  }
-  
-  #noVNC_password_input::placeholder {
-      color: #5a5566 !important;
-  }
-
-  /* Pink Connect Button */
-  #noVNC_connect_button, #noVNC_password_button {
-      background: #ff3366 !important;
-      border: none !important;
-      border-radius: 8px !important;
-      color: white !important;
-      font-weight: 600 !important;
-      font-size: 16px !important;
-      padding: 16px 20px !important;
-      width: 100% !important;
-      cursor: pointer !important;
-      box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3) !important;
-      transition: all 0.3s ease !important;
-      display: block !important;
-      text-transform: none !important;
-  }
-
-  #noVNC_connect_button:hover, #noVNC_password_button:hover {
-      background: #ff1a53 !important;
-      box-shadow: 0 6px 25px rgba(255, 51, 102, 0.5) !important;
-      transform: translateY(-2px) !important;
-  }
-
-  /* Hide original labels and cancel button */
-  #noVNC_password_dlg > form > label, 
-  #noVNC_cancel_password_button {
-      display: none !important;
-  }
-  
-  /* Emergency Override text */
-  .emergency-override {
-      color: #ff3366;
-      font-size: 13px;
-      text-align: center;
-      margin-top: 30px;
-      cursor: pointer;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-  }
-  .emergency-override:hover {
-      opacity: 1;
-  }
-
-  /* Glowing dots */
-  .glow-dot {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-  }
-  .glow-dot.pink { background: #ff3366; width: 6px; height: 6px; box-shadow: 0 0 15px 5px rgba(255, 51, 102, 0.8); top: 20%; left: 10%; }
-  .glow-dot.green { background: #00ff99; width: 4px; height: 4px; box-shadow: 0 0 12px 4px rgba(0, 255, 153, 0.8); top: 10%; right: 30%; }
-  .glow-dot.yellow { background: #ffcc00; width: 5px; height: 5px; box-shadow: 0 0 15px 5px rgba(255, 204, 0, 0.8); bottom: 40%; right: 15%; }
-  .glow-dot.white { background: #ffffff; width: 3px; height: 3px; box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8); bottom: 30%; left: 25%; }
-
-  /* Footer */
-  .g4-footer {
-      position: absolute;
-      bottom: 30px;
-      left: 40px;
-      right: 40px;
-      display: flex;
-      justify-content: space-between;
-      color: #5a5566;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      font-family: monospace;
-      z-index: 10;
-  }
-  .g4-footer span { margin-left: 20px; }
-  .g4-footer span:hover { color: #8c8899; cursor: pointer; }
-</style>
-
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // 1. Add background dots & footer if not exists
-    const bg = document.getElementById("noVNC_transition");
-    if (bg && !document.querySelector(".g4-footer")) {
-        bg.insertAdjacentHTML('beforeend', `
-            <div class="glow-dot pink"></div>
-            <div class="glow-dot green"></div>
-            <div class="glow-dot yellow"></div>
-            <div class="glow-dot white"></div>
-            <div class="g4-footer">
-                <div>GEANT4 V11.2 &bull; DEPARTMENT 11</div>
-                <div>
-                    <span>SYSTEM STATUS</span>
-                    <span>TECHNICAL DOCS</span>
-                </div>
-            </div>
-        `);
+(function () {
+  "use strict";
+
+  function applyGeant4UI() {
+    document.title = "Geant4";
+
+    // ── 1. Override logo text ──────────────────────────────────────────────
+    document.querySelectorAll(".noVNC_logo").forEach(function (logo) {
+      if (!logo.dataset.g4Done) {
+        logo.dataset.g4Done = "1";
+        logo.innerHTML = "Geant4";
+      }
+    });
+
+    // ── 2. Subtitle right after logo ──────────────────────────────────────
+    if (!document.querySelector(".g4-subtitle")) {
+      var logo = document.querySelector(".noVNC_logo");
+      if (logo && logo.parentNode) {
+        var sub = document.createElement("div");
+        sub.className = "g4-subtitle";
+        sub.textContent = "для 11 кафедры";
+        logo.parentNode.insertBefore(sub, logo.nextSibling);
+      }
     }
 
-    setInterval(() => {
-      // 2. Override logos
-      document.title = "Geant4";
-      const logos = document.querySelectorAll(".noVNC_logo");
-      logos.forEach(logo => {
-        if (!logo.innerHTML.includes("для 11 кафедры")) {
-          logo.innerHTML = "Geant4<br><span class='g4-subtitle'>для 11 кафедры</span>";
-        }
-      });
-
-      // 3. Restructure password dialog
-      const pwdInput = document.getElementById("noVNC_password_input");
-      if (pwdInput && !pwdInput.hasAttribute("data-styled")) {
-          pwdInput.setAttribute("data-styled", "true");
-          pwdInput.placeholder = "Enter secure payload";
-          
-          // Wrap input
-          const wrapper = document.createElement("div");
-          wrapper.className = "input-wrapper";
-          pwdInput.parentNode.insertBefore(wrapper, pwdInput);
-          wrapper.appendChild(pwdInput);
-
-          // Add Access Key label
-          const label = document.createElement("div");
-          label.className = "custom-label";
-          label.innerText = "ACCESS KEY";
-          wrapper.parentNode.insertBefore(label, wrapper);
+    // ── 3. Rename connect button ─────────────────────────────────────────
+    var connBtn = document.getElementById("noVNC_connect_button");
+    if (connBtn) {
+      var inner = connBtn.querySelector("div") || connBtn;
+      if (inner.textContent.trim() !== "Initialize Protocol →") {
+        inner.textContent = "Initialize Protocol →";
       }
+    }
 
-      // 4. Update password button text
-      const pwdBtn = document.getElementById("noVNC_password_button");
-      if (pwdBtn && pwdBtn.innerText !== "Initialize Protocol →") {
-          pwdBtn.innerText = "Initialize Protocol →";
-          if (!document.querySelector(".emergency-override")) {
-              const emg = document.createElement("div");
-              emg.className = "emergency-override";
-              emg.innerText = "Emergency Override";
-              pwdBtn.parentNode.appendChild(emg);
-          }
+    // ── 4. Style password dialog ──────────────────────────────────────────
+    var pwdInput = document.getElementById("noVNC_password_input");
+    if (pwdInput && !pwdInput.dataset.g4Done) {
+      pwdInput.dataset.g4Done = "1";
+      pwdInput.placeholder = "Enter secure payload";
+
+      // Wrap in icon wrapper
+      var wrap = document.createElement("div");
+      wrap.className = "g4-input-wrap";
+      pwdInput.parentNode.insertBefore(wrap, pwdInput);
+      wrap.appendChild(pwdInput);
+
+      // Add label above
+      var label = document.createElement("div");
+      label.className = "g4-field-label";
+      label.textContent = "ACCESS KEY";
+      wrap.parentNode.insertBefore(label, wrap);
+    }
+
+    // ── 5. Rename send-credentials button ────────────────────────────────
+    var sendBtn = document.getElementById("noVNC_send_credentials_button");
+    if (sendBtn && sendBtn.textContent.trim() !== "Initialize Protocol →") {
+      sendBtn.textContent = "Initialize Protocol →";
+    }
+
+    // ── 6. Emergency override link ───────────────────────────────────────
+    var credDlg = document.getElementById("noVNC_credentials_dlg");
+    if (credDlg && !document.querySelector(".g4-emergency")) {
+      var emg = document.createElement("a");
+      emg.className = "g4-emergency";
+      emg.textContent = "Emergency Override";
+      emg.href = "#";
+      emg.onclick = function (e) { e.preventDefault(); };
+      credDlg.appendChild(emg);
+    }
+    var connDlg = document.getElementById("noVNC_connect_dlg");
+    if (connDlg && !connDlg.querySelector(".g4-emergency")) {
+      var emg2 = document.createElement("a");
+      emg2.className = "g4-emergency";
+      emg2.textContent = "Emergency Override";
+      emg2.href = "#";
+      emg2.onclick = function (e) { e.preventDefault(); };
+      connDlg.appendChild(emg2);
+    }
+
+    // ── 7. Footer ─────────────────────────────────────────────────────────
+    if (!document.getElementById("g4-footer")) {
+      var footer = document.createElement("div");
+      footer.id = "g4-footer";
+      footer.innerHTML =
+        '<div>GEANT4 V11.3 &bull; DEPARTMENT 11</div>' +
+        '<div class="g4-footer-links">' +
+          '<span>SYSTEM STATUS</span>' +
+          '<span>TECHNICAL DOCS</span>' +
+        '</div>';
+      document.body.appendChild(footer);
+    }
+
+    // ── 8. Floating glowing dots ─────────────────────────────────────────
+    var dots = [
+      { cls: "pink",   color: "#ff3366", glow: "rgba(255,51,102,0.8)",  size: 6, top: "20%", left: "10%" },
+      { cls: "green",  color: "#00ffaa", glow: "rgba(0,255,170,0.8)",   size: 4, top: "10%", right: "30%" },
+      { cls: "yellow", color: "#ffcc00", glow: "rgba(255,204,0,0.8)",   size: 5, bottom: "40%", right: "15%" },
+      { cls: "white",  color: "#ffffff", glow: "rgba(255,255,255,0.8)", size: 3, bottom: "30%", left: "25%" }
+    ];
+    dots.forEach(function (d) {
+      if (!document.querySelector(".g4-dot." + d.cls)) {
+        var dot = document.createElement("div");
+        dot.className = "g4-dot " + d.cls;
+        dot.style.cssText =
+          "background:" + d.color + ";" +
+          "width:" + d.size + "px;height:" + d.size + "px;" +
+          "box-shadow:0 0 14px 6px " + d.glow + ";" +
+          (d.top    ? "top:"    + d.top    + ";" : "") +
+          (d.bottom ? "bottom:" + d.bottom + ";" : "") +
+          (d.left   ? "left:"   + d.left   + ";" : "") +
+          (d.right  ? "right:"  + d.right  + ";" : "");
+        document.body.appendChild(dot);
       }
-      
-      const connBtn = document.getElementById("noVNC_connect_button");
-      if (connBtn && connBtn.innerText !== "Initialize Protocol →") {
-          connBtn.innerText = "Initialize Protocol →";
-      }
-    }, 100);
+    });
+  }
+
+  // Run immediately and every 200ms (to catch noVNC's dynamic DOM updates)
+  document.addEventListener("DOMContentLoaded", function () {
+    applyGeant4UI();
+    setInterval(applyGeant4UI, 200);
   });
+})();
 </script>
