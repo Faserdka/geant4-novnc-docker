@@ -6,7 +6,7 @@ export HOME=/root
 
 # Настройка пароля VNC
 mkdir -p $HOME/.vnc
-echo "${VNC_PASSWORD:-}" | vncpasswd -f > $HOME/.vnc/passwd
+echo "${VNC_PASSWORD:-"PASSWORD"}" | vncpasswd -f > $HOME/.vnc/passwd
 chmod 600 $HOME/.vnc/passwd
 
 # Создание скрипта xstartup для Fluxbox
