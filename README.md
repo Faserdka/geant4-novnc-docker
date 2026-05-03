@@ -26,7 +26,7 @@ This repository contains the configuration files to deploy a Geant4 physical eng
 
 3. Open your browser and navigate to:
    ```
-   http://localhost:"PORT"
+   http://localhost:"80"
    ```
 
 4. Click **Connect**, enter the default password (`"PASSWORD"`), and enjoy using Geant4!
