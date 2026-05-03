@@ -6,7 +6,7 @@ services:
    
     environment:
       # Пароль для доступа через noVNC (можно изменить)
-      - VNC_PASSWORD=${VNC_PASSWORD:-geant4pass}
+      - VNC_PASSWORD=${VNC_PASSWORD:-}
     volumes:
       # Монтирование локальной папки workspace внутрь контейнера
       - ./workspace:/workspace
