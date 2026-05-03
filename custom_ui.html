@@ -107,6 +107,10 @@ html, body {
   width: 440px !important;
   max-width: 90vw !important;
   transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 #noVNC_connect_dlg:hover,
 #noVNC_credentials_dlg:hover {
@@ -216,23 +220,25 @@ html, body {
 
 /* Encrypted badge */
 .g4-encrypted {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 10px;
-  font-weight: 500;
-  color: #b0a89e;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-top: 24px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color: #b0a89e !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  margin-top: 24px !important;
+  width: 100% !important;
+  clear: both !important;
 }
 .g4-encrypted svg {
-  width: 14px;
-  height: 14px;
-  stroke: #b0a89e;
-  fill: none;
-  stroke-width: 1.5;
+  width: 14px !important;
+  height: 14px !important;
+  stroke: #b0a89e !important;
+  fill: none !important;
+  stroke-width: 1.5 !important;
 }
 
 /* Hide default labels/cancel but keep input visible */
@@ -240,12 +246,15 @@ html, body {
 #noVNC_cancel_credentials_button {
   display: none !important;
 }
+#noVNC_credentials_dlg form,
 #noVNC_credentials_dlg ul {
+  width: 100% !important;
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 #noVNC_credentials_dlg ul li {
+  width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
 }
