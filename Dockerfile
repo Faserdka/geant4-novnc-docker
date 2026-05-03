@@ -55,6 +55,6 @@ RUN chmod +x /entrypoint.sh
 # Рабочая директория (которую мы будем монтировать)
 WORKDIR /workspace
 
-EXPOSE "PORT"
+EXPOSE "80"
 
 ENTRYPOINT ["/entrypoint.sh"]
