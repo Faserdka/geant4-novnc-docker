@@ -1,4 +1,5 @@
 FROM ubuntu:24.04
+LABEL org.opencontainers.image.source="https://github.com/Faserdka/geant4-novnc-docker"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
