@@ -57,6 +57,19 @@ RUN cat /tmp/custom_ui_js.html >> /usr/share/novnc/vnc.html
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Копируем исходный код детектора в образ
+COPY workspace/optical_detector /opt/optical_detector_src
+
+# Собираем "вшитую" версию проекта
+RUN mkdir -p /opt/optical_detector_build && \
+    cd /opt/optical_detector_build && \
+    /bin/bash -c "source /usr/local/geant4/bin/geant4.sh && \
+    cmake /opt/optical_detector_src && \
+    make -j3"
+
+# Создаем удобный алиас для запуска вшитой версии
+RUN echo 'alias run_detector="/opt/optical_detector_build/optical_detector"' >> /root/.bashrc
+
 # Рабочая директория (которую мы будем монтировать)
 WORKDIR /workspace
 

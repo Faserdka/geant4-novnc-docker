@@ -28,4 +28,4 @@ vncserver :1 -geometry 1280x768 -depth 24
 # Запуск noVNC
 echo "Starting noVNC web server on port ..."
 # Используем websockify для проксирования VNC в WebSockets
-exec websockify --web /usr/share/novnc "80@ localhost:"80"
+exec websockify --web /usr/share/novnc 8080 localhost:5901

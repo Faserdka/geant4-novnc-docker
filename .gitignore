@@ -1,5 +1,22 @@
-workspace/*/build/
-workspace/*/bin/
-.env
-.docker/
-.antigravity/
+# Geant4 Build artifacts
+build/*
+!build/CMakeLists.txt
+
+# Temporary files
+*.mac
+!vis.mac
+
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Local config and info
+run_info.txt
+analysis.log
+results.png
+final_combined_data.csv
+tmp_run.mac
+
+# System
+.DS_Store
+.gemini/

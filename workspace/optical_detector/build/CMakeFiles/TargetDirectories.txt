@@ -1,0 +1,3 @@
+/workspace/optical_detector/build/CMakeFiles/optical_detector.dir
+/workspace/optical_detector/build/CMakeFiles/edit_cache.dir
+/workspace/optical_detector/build/CMakeFiles/rebuild_cache.dir

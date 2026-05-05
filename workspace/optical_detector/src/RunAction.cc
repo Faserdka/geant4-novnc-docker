@@ -1,6 +1,8 @@
 #include "RunAction.hh"
 #include "G4AnalysisManager.hh"
 #include "G4Run.hh"
+#include <fstream>
+
 
 RunAction::RunAction()
 : G4UserRunAction()
@@ -23,9 +25,17 @@ void RunAction::BeginOfRunAction(const G4Run*)
   analysisManager->OpenFile("hits.csv");
 }
 
-void RunAction::EndOfRunAction(const G4Run*)
+void RunAction::EndOfRunAction(const G4Run* run)
 {
   auto analysisManager = G4AnalysisManager::Instance();
   analysisManager->Write();
   analysisManager->CloseFile();
+
+  // Сохраняем информацию о количестве запущенных событий
+  std::ofstream runInfo("run_info.txt");
+  if (runInfo.is_open()) {
+      runInfo << run->GetNumberOfEvent();
+      runInfo.close();
+  }
 }
+
